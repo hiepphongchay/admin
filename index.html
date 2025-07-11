@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tra cứu lỗi vi phạm</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #searchBox { padding: 8px; width: 300px; }
+        #results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Tra cứu lỗi vi phạm</h1>
+    <input type="text" id="searchBox" placeholder="Nhập mã lỗi hoặc từ khóa...">
+    <button onclick="search()">Tìm kiếm</button>
+    <div id="results"></div>
+
+    <script>
+        // Dữ liệu mẫu (có thể thay bằng file JSON)
+        const violations = [
+            { code: "L01", name: "Vượt đèn đỏ", penalty: "500,000 VNĐ" },
+            { code: "L02", name: "Không đội mũ bảo hiểm", penalty: "200,000 VNĐ" }
+        ];
+
+        function search() {
+            const keyword = document.getElementById("searchBox").value.toLowerCase();
+            const resultDiv = document.getElementById("results");
+            resultDiv.innerHTML = "";
+
+            const found = violations.filter(v => 
+                v.code.toLowerCase().includes(keyword) || 
+                v.name.toLowerCase().includes(keyword)
+            );
+
+            if (found.length === 0) {
+                resultDiv.innerHTML = "<p>Không tìm thấy lỗi!</p>";
+            } else {
+                found.forEach(v => {
+                    resultDiv.innerHTML += `
+                        <div style="border: 1px solid #ccc; padding: 10px; margin: 5px 0;">
+                            <strong>${v.code}</strong>: ${v.name} <br>
+                            Phạt: ${v.penalty}
+                        </div>
+                    `;
+                });
+            }
+        }
+    </script>
+</body>
+</html>
